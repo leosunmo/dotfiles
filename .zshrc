@@ -120,6 +120,7 @@ case $1 in
   ;;
   green)
     kubectl --context=prod-us --namespace=green ${@:2}
+  ;;
   *)
     kubectl --context=prod-us $@
 esac
