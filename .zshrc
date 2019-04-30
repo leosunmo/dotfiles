@@ -2,21 +2,40 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/leo/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # JAVA_HOME stuff
+if [ $(uname 2> /dev/null) != "Linux" ]; then
 export JAVA_HOME=$(/usr/libexec/java_home)
+fi
 
 # Go Path
-export GOPATH=/Users/leo/go
+export GOPATH=~/go
 
 # Enable zmv for fancy ZSH mv action
 autoload -Uz zmv
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# Antigen setup
+source ${ZSH}/custom/tools/antigen.zsh
+
+# Load the oh-my-zsh library
+antigen use oh-my-zsh
+
+# Load some default oh-my-zsh plugins
+antigen bundle <<EOBUNDLES
+	git
+	pip
+	command-not-found
+	zsh-dircolors-solarized
+	zsh-users/zsh-syntax-highlighting
+	zsh-users/zsh-completions
+EOBUNDLES
+
+# Load the theme.
+antigen theme robbyrussell
+
+# Apply
+antigen apply
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -60,16 +79,16 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-dircolors-solarized)
 
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# Set key repeat speeds
-defaults write -g InitialKeyRepeat -int 12 # Normal minimum in the GUI is 15 (225 ms)
-defaults write -g KeyRepeat -int 3 # Normal minimum in the GUI is 2 (30 ms)
-
+if [ "$(uname 2> /dev/null)" != "Linux" ]; then
+	# Set key repeat speeds
+	defaults write -g InitialKeyRepeat -int 12 # Normal minimum in the GUI is 15 (225 ms)
+	defaults write -g KeyRepeat -int 3 # Normal minimum in the GUI is 2 (30 ms)
+fi
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -111,16 +130,21 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Add /usr/local/sbin/ to PATH since some stuff from Brew gets installed there
 export PATH="$PATH:/usr/local/sbin"
 
-# Add /Users/leo/go/bin to path for Golang binaries
-export PATH="$PATH:/Users/leo/go/bin"
+# Add local/bin in home dir for pip3
+export PATH="$PATH:~/.local/bin"
+
+# Add /go/bin to path for Golang binaries
+export PATH="$PATH:/go/bin"
 
 # Add fancy Kubectl PS1 for prompt
 # https://github.com/leosunmo/kube-prompt.zsh
-source /Users/leo/.oh-my-zsh/custom/plugins/kube-prompt.zsh/kube-ps1.zsh
-PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(_kube_ps1) $(git_prompt_info)'
+if [ -e ${ZSH}.oh-my-zsh/custom/plugins/kube-prompt.zsh/kube-ps1.zsh ]; then
+  source ${ZSH}.oh-my-zsh/custom/plugins/kube-prompt.zsh/kube-ps1.zsh
+  PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(_kube_ps1) $(git_prompt_info)'
+fi
 
 # added by travis gem
-[ -f /Users/leo/.travis/travis.sh ] && source /Users/leo/.travis/travis.sh
+[ -f /.travis/travis.sh ] && source /.travis/travis.sh
 export PATH="/usr/local/opt/maven@3.3/bin:$PATH"
 export PATH="/usr/local/opt/maven@3.2/bin:$PATH"
 export PATH="/usr/local/opt/node@8/bin:$PATH"
