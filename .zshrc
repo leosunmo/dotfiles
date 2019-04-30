@@ -138,8 +138,8 @@ export PATH="$PATH:/go/bin"
 
 # Add fancy Kubectl PS1 for prompt
 # https://github.com/leosunmo/kube-prompt.zsh
-if [ -e ${ZSH}.oh-my-zsh/custom/plugins/kube-prompt.zsh/kube-ps1.zsh ]; then
-  source ${ZSH}.oh-my-zsh/custom/plugins/kube-prompt.zsh/kube-ps1.zsh
+if [ -f "${ZSH}/custom/plugins/kube-prompt.zsh/kube-ps1.zsh" ]; then
+  source ${ZSH}/custom/plugins/kube-prompt.zsh/kube-ps1.zsh
   PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(_kube_ps1) $(git_prompt_info)'
 fi
 
