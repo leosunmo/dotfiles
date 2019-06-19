@@ -15,6 +15,11 @@ add-apt-repository -y ppa:mmstick76/alacritty
 # Download some
 apt install curl jq git vim zsh regolith-desktop alacritty
 
+# Put some regolith and i3 stuff in place
+cp -R ./.config/i3-regolith ~/.config/ 
+cp -R ./i3blocks/i3blocks /usr/share/i3blocks
+cp ./i3blocks/i3blocks.conf /etc/i3blocks.conf
+
 # Bind Caps lock to ESC
 setxkbmap -option caps:escape
 
