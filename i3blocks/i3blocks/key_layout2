@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+gsettings get org.gnome.desktop.input-sources mru-sources | sed -r "s/\S*\s'([^']+).*/\1/"
+
