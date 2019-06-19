@@ -80,7 +80,6 @@ antigen apply
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-#source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -122,6 +121,11 @@ alias cat='bat'
 # Kubernetes aliases
 alias kdump='kubectl get all --all-namespaces'
 
+# Alias xgd-open for convenience
+alias open='xdg-open'
+
+# Alias pip3 to pip
+alias pip='pip3'
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -135,6 +139,7 @@ export PATH="$PATH:~/.local/bin"
 
 # Add /go/bin to path for Golang binaries
 export PATH="$PATH:/go/bin"
+export PATH="$PATH:/usr/local/go/bin"
 
 # Add fancy Kubectl PS1 for prompt
 # https://github.com/leosunmo/kube-prompt.zsh
@@ -197,3 +202,8 @@ man() {
 
 # Krew kubectl plugin manager
 PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# Start SSH agent
+eval $(ssh-agent -s)
+
+source <(kubectl completion zsh)
