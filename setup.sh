@@ -6,8 +6,14 @@ if [[ $(id -u) != 0 ]]; then
 	exit 1
 fi
 
+# Add ppa for i3-regolith
+add-apt-repository -y ppa:/kgilmer/regolith-stable
+
+# Add ppa for alacritty
+add-apt-repository -y ppa:mmstick76/alacritty
+
 # Download some
-apt install curl jq git vim zsh
+apt install curl jq git vim zsh regolith-desktop alacritty
 
 # Bind Caps lock to ESC
 setxkbmap -option caps:escape
