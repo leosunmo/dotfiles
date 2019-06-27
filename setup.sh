@@ -56,6 +56,13 @@ dpkg -i bat_*_amd64.deb
 
 popd
 
+# Copy bat config and theme
+cp -R ./.config/bat ~/.config
+
+# Update bat's binary cache with new Nord theme
+bat cache --build
+
+
 # Install Kubectl
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/linux/amd64/kubectl
 
