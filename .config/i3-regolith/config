@@ -290,6 +290,14 @@ bar {
   }
 }
 
+# Assign some windows to workspaces
+assign [class="Signal"] $ws9
+
+# can't assign spotify because of
+# https://github.com/i3/i3/issues/2060#issuecomment-155179472
+for_window [class="Spotify"] move to workspace $ws6
+assign [class="Signal"] $ws9
+
 # Run other programs with i3
 
 # Composite manager
