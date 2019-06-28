@@ -46,6 +46,17 @@ chsh -s /bin/zsh
 
 # Install some applications
 
+# Download and install latest playerctl
+
+pushd /tmp/
+curl -s https://api.github.com/repos/acrisci/playerctl/releases/latest \
+| jq -r '.assets[] | select(.name | test("playerctl.+_amd64.deb")) | .browser_download_url' \
+| wget -qi -
+
+dpkg -i playerctl*_amd64.deb
+
+popd
+
 # Download latest release of bat
 pushd /tmp/
 curl -s https://api.github.com/repos/sharkdp/bat/releases/latest \
