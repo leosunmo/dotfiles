@@ -49,11 +49,11 @@ set $ws1   " 1 <span foreground='#268bd2'></span> "
 set $ws2   " 2 <span foreground='#2aa198'></span> "
 set $ws3   " 3 <span foreground='#859900'></span> "
 set $ws4   " 4 <span foreground='#b58900'></span> "
-set $ws5   " 5 <span foreground='#cb4b10'></span> "
-set $ws6   " 6 <span foreground='#dc322f'></span> "
+set $ws5   " 5 <span foreground='#cb4b10'></span> "
+set $ws6   " 6 <span foreground='#859900'></span> "
 set $ws7   " 7 <span foreground='#d33682'></span> "
 set $ws8   " 8 <span foreground='#6c71c4'></span> "
-set $ws9   " 9 <span foreground='#93a1a1'></span>  "
+set $ws9   " 9 <span foreground='#268bd2'></span> "
 set $ws10  "10 <span foreground='#268bd2'></span>  "
 set $ws11  "11 <span foreground='#2aa198'></span>  "
 set $ws12  "12 <span foreground='#859900'></span>  "
@@ -297,6 +297,7 @@ assign [class="Signal"] $ws9
 # https://github.com/i3/i3/issues/2060#issuecomment-155179472
 for_window [class="Spotify"] move to workspace $ws6
 assign [class="Signal"] $ws9
+assign [class="Slack"] $ws5
 
 # Run other programs with i3
 
