@@ -44,6 +44,18 @@ color=#586e75
 #[kubernetes]
 #interval=10
 
+# Music player
+# Displays "ARTIST - SONG" if music is playing
+# Left-click/Right-click - Previous/Next song
+# Middle-click Play/Pause
+#
+# from https://github.com/vivien/i3blocks-contrib/tree/master/mediaplayer
+
+[mediaplayer]
+instance=spotify
+interval=3
+signal=10
+
 [nm-vpn]
 label=VPN:
 interval=5
