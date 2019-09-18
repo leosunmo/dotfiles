@@ -86,3 +86,7 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/l
   ./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" install \
     --manifest=krew.yaml --archive=krew.tar.gz
 )
+# Aliases and misc stuff
+git config --global alias.recent "for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+kubectl completion zsh > "${fpath[1]}/_kubectl"
+
