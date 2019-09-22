@@ -5,6 +5,7 @@
 # This defines which key super maps to on your keyboard.  
 # Alt key is Mod1, and Windows key is Mod4
 set $mod Mod4
+set $alt Mod1
 
 # Color values are defined in ~/.Xresources-regolith
 
@@ -101,50 +102,71 @@ bindsym $mod+Shift+t focus mode_toggle
 bindsym $mod+t layout toggle tabbed splith splitv
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
-bindsym $mod+Ctrl+1 workspace $ws11
-bindsym $mod+Ctrl+2 workspace $ws12
-bindsym $mod+Ctrl+3 workspace $ws13
-bindsym $mod+Ctrl+4 workspace $ws14
-bindsym $mod+Ctrl+5 workspace $ws15
-bindsym $mod+Ctrl+6 workspace $ws16
-bindsym $mod+Ctrl+7 workspace $ws17
-bindsym $mod+Ctrl+8 workspace $ws18
-bindsym $mod+Ctrl+9 workspace $ws19
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+bindsym $mod+Ctrl+1 workspace number $ws11
+bindsym $mod+Ctrl+2 workspace number $ws12
+bindsym $mod+Ctrl+3 workspace number $ws13
+bindsym $mod+Ctrl+4 workspace number $ws14
+bindsym $mod+Ctrl+5 workspace number $ws15
+bindsym $mod+Ctrl+6 workspace number $ws16
+bindsym $mod+Ctrl+7 workspace number $ws17
+bindsym $mod+Ctrl+8 workspace number $ws18
+bindsym $mod+Ctrl+9 workspace number $ws19
 
-# cycle between workspace
+# cycle across workspaces
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
-bindsym $mod+Shift+Ctrl+1 move container to workspace $ws11
-bindsym $mod+Shift+Ctrl+2 move container to workspace $ws12
-bindsym $mod+Shift+Ctrl+3 move container to workspace $ws13
-bindsym $mod+Shift+Ctrl+4 move container to workspace $ws14
-bindsym $mod+Shift+Ctrl+5 move container to workspace $ws15
-bindsym $mod+Shift+Ctrl+6 move container to workspace $ws16
-bindsym $mod+Shift+Ctrl+7 move container to workspace $ws17
-bindsym $mod+Shift+Ctrl+8 move container to workspace $ws18
-bindsym $mod+Shift+Ctrl+9 move container to workspace $ws19
+bindsym $mod+Shift+1 move container to workspace number 1 $ws1
+bindsym $mod+Shift+2 move container to workspace number 2 $ws2
+bindsym $mod+Shift+3 move container to workspace number 3 $ws3
+bindsym $mod+Shift+4 move container to workspace number 4 $ws4
+bindsym $mod+Shift+5 move container to workspace number 5 $ws5
+bindsym $mod+Shift+6 move container to workspace number 6 $ws6
+bindsym $mod+Shift+7 move container to workspace number 7 $ws7
+bindsym $mod+Shift+8 move container to workspace number 8 $ws8
+bindsym $mod+Shift+9 move container to workspace number 9 $ws9
+bindsym $mod+Shift+0 move container to workspace number 10 $ws10
+bindsym $mod+Shift+Ctrl+1 move container to workspace number 11 $ws11
+bindsym $mod+Shift+Ctrl+2 move container to workspace number 12 $ws12
+bindsym $mod+Shift+Ctrl+3 move container to workspace number 13 $ws13
+bindsym $mod+Shift+Ctrl+4 move container to workspace number 14 $ws14
+bindsym $mod+Shift+Ctrl+5 move container to workspace number 15 $ws15
+bindsym $mod+Shift+Ctrl+6 move container to workspace number 16 $ws16
+bindsym $mod+Shift+Ctrl+7 move container to workspace number 17 $ws17
+bindsym $mod+Shift+Ctrl+8 move container to workspace number 18 $ws18
+bindsym $mod+Shift+Ctrl+9 move container to workspace number 19 $ws19
+
+# move focused container to workspace, move to workspace
+bindsym $mod+$alt+1 move container to workspace number 1 $ws1; workspace number 1 $ws1
+bindsym $mod+$alt+2 move container to workspace number 2 $ws2; workspace number 2 $ws2
+bindsym $mod+$alt+3 move container to workspace number 3 $ws3; workspace number 3 $ws3
+bindsym $mod+$alt+4 move container to workspace number 4 $ws4; workspace number 4 $ws4
+bindsym $mod+$alt+5 move container to workspace number 5 $ws5; workspace number 5 $ws5
+bindsym $mod+$alt+6 move container to workspace number 6 $ws6; workspace number 6 $ws6
+bindsym $mod+$alt+7 move container to workspace number 7 $ws7; workspace number 7 $ws7
+bindsym $mod+$alt+8 move container to workspace number 8 $ws8; workspace number 8 $ws8
+bindsym $mod+$alt+9 move container to workspace number 9 $ws9; workspace number 9 $ws9
+bindsym $mod+$alt+0 move container to workspace number 10 $ws10; workspace number 10 $ws1
+bindsym $mod+$alt+Ctrl+1 move container to workspace number 11 $ws11; workspace number 11 $ws11
+bindsym $mod+$alt+Ctrl+2 move container to workspace number 12 $ws12; workspace number 12 $ws12
+bindsym $mod+$alt+Ctrl+3 move container to workspace number 13 $ws13; workspace number 13 $ws13
+bindsym $mod+$alt+Ctrl+4 move container to workspace number 14 $ws14; workspace number 14 $ws14
+bindsym $mod+$alt+Ctrl+5 move container to workspace number 15 $ws15; workspace number 15 $ws15
+bindsym $mod+$alt+Ctrl+6 move container to workspace number 16 $ws16; workspace number 16 $ws16
+bindsym $mod+$alt+Ctrl+7 move container to workspace number 17 $ws17; workspace number 17 $ws17
+bindsym $mod+$alt+Ctrl+8 move container to workspace number 18 $ws18; workspace number 18 $ws18
+bindsym $mod+$alt+Ctrl+9 move container to workspace number 19 $ws19; workspace number 19 $ws19
 
 bindsym $mod+Shift+grave move container to workspace $ws20
 
@@ -177,7 +199,7 @@ bindsym $mod+s exec gnome-control-center sound
 # CUSTOM
 ####################################
 # Scripts location
-set $scripts_dir /home/leo/.config/i3-regolith/scripts
+set $scripts_dir /home/leo/.config/regolith/i3/scripts
 
 # Connect to VPN
 bindsym $mod+Shift+n exec $scripts_dir/vpn_toggle.sh leo.palmer
@@ -265,11 +287,13 @@ client.focused_inactive $focused_inactive.color.border     $focused_inactive.col
 client.unfocused        $unfocused.color.border            $unfocused.color.background        $unfocused.color.text              $unfocused.color.indicator         $unfocused.color.child_border
 client.urgent           $urgent.color.border               $urgent.color.background           $urgent.color.text                 $urgent.color.indicator            $urgent.color.child_border
 
+
 # Enable popup during fullscreen
 popup_during_fullscreen smart
 
 # window focus follows your mouse movements as the mouse crosses window borders
 focus_follows_mouse no
+
 
 set_from_resource $i3-wm.bar.background.color i3-wm.bar.background.color "#002b36"
 set_from_resource $i3-wm.bar.statusline.color i3-wm.bar.statusline.color "#93a1a1"
@@ -295,7 +319,8 @@ set_from_resource $i3-wm.bar.font i3-wm.bar.font "pango:Source Code Pro Medium 1
 
 # Configure the bar
 bar {
-  font $i3-wm.bar.font
+  #font $i3-wm.bar.font
+  font pango:Source Code Pro Medium 13
   separator_symbol " "
   status_command i3xrocks -c ~/.config/i3xrocks/i3xrocks.conf
   tray_output none
@@ -315,13 +340,12 @@ bar {
 }
 
 # Assign some windows to workspaces
-assign [class="Signal"] $ws9
+assign [class="Signal"] number 9 $ws9
+assign [class="Slack"] number 5 $ws5
 
 # can't assign spotify because of
 # https://github.com/i3/i3/issues/2060#issuecomment-155179472
-for_window [class="Spotify"] move to workspace $ws6
-assign [class="Signal"] $ws9
-assign [class="Slack"] $ws5
+for_window [class="Spotify"] move to workspace number 6 $ws6
 
 # Run programs when i3 starts
 
