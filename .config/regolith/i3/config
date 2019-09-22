@@ -158,15 +158,15 @@ bindsym $mod+$alt+7 move container to workspace number $ws7; workspace number $w
 bindsym $mod+$alt+8 move container to workspace number $ws8; workspace number $ws8
 bindsym $mod+$alt+9 move container to workspace number $ws9; workspace number $ws9
 bindsym $mod+$alt+0 move container to workspace number $ws10; workspace number $ws10
-bindsym $mod+$alt+Ctrl+1 move container to workspace number 11 $ws11; workspace number $ws11
-bindsym $mod+$alt+Ctrl+2 move container to workspace number 12 $ws12; workspace number $ws12
-bindsym $mod+$alt+Ctrl+3 move container to workspace number 13 $ws13; workspace number $ws13
-bindsym $mod+$alt+Ctrl+4 move container to workspace number 14 $ws14; workspace number $ws14
-bindsym $mod+$alt+Ctrl+5 move container to workspace number 15 $ws15; workspace number $ws15
-bindsym $mod+$alt+Ctrl+6 move container to workspace number 16 $ws16; workspace number $ws16
-bindsym $mod+$alt+Ctrl+7 move container to workspace number 17 $ws17; workspace number $ws17
-bindsym $mod+$alt+Ctrl+8 move container to workspace number 18 $ws18; workspace number $ws18
-bindsym $mod+$alt+Ctrl+9 move container to workspace number 19 $ws19; workspace number $ws19
+bindsym $mod+$alt+Ctrl+1 move container to workspace number $ws11; workspace number $ws11
+bindsym $mod+$alt+Ctrl+2 move container to workspace number $ws12; workspace number $ws12
+bindsym $mod+$alt+Ctrl+3 move container to workspace number $ws13; workspace number $ws13
+bindsym $mod+$alt+Ctrl+4 move container to workspace number $ws14; workspace number $ws14
+bindsym $mod+$alt+Ctrl+5 move container to workspace number $ws15; workspace number $ws15
+bindsym $mod+$alt+Ctrl+6 move container to workspace number $ws16; workspace number $ws16
+bindsym $mod+$alt+Ctrl+7 move container to workspace number $ws17; workspace number $ws17
+bindsym $mod+$alt+Ctrl+8 move container to workspace number $ws18; workspace number $ws18
+bindsym $mod+$alt+Ctrl+9 move container to workspace number $ws19; workspace number $ws19
 
 bindsym $mod+Shift+grave move container to workspace $ws20
 
