@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+zmodload zsh/zprof
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
@@ -11,6 +13,7 @@ fi
 
 # Go Path
 export GOPATH=~/go
+export GO111MODULE=auto
 
 # Enable zmv for fancy ZSH mv action
 autoload -Uz zmv
@@ -22,13 +25,14 @@ source ${ZSH}/custom/tools/antigen.zsh
 antigen use oh-my-zsh
 
 # Load some default oh-my-zsh plugins
-antigen bundle <<EOBUNDLES
-	git
-	pip
-	command-not-found
-	zsh-dircolors-solarized
-	zsh-users/zsh-syntax-highlighting
-	zsh-users/zsh-completions
+antigen bundles <<EOBUNDLES
+git
+pip
+command-not-found
+zsh-dircolors-solarized
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-completions
+robbyrussell/oh-my-zsh
 EOBUNDLES
 
 # Load the theme.
@@ -36,6 +40,12 @@ antigen theme robbyrussell
 
 # Apply
 antigen apply
+
+autoload -U compinit && compinit
+
+# Install asdf
+source $HOME/.asdf/asdf.sh
+source $HOME/.asdf/completions/asdf.bash
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -88,6 +98,7 @@ if [ "$(uname 2> /dev/null)" != "Linux" ]; then
 	defaults write -g InitialKeyRepeat -int 12 # Normal minimum in the GUI is 15 (225 ms)
 	defaults write -g KeyRepeat -int 3 # Normal minimum in the GUI is 2 (30 ms)
 fi
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -121,10 +132,10 @@ alias cat='bat'
 # Kubernetes aliases
 alias kdump='kubectl get all --all-namespaces'
 
-# Alias xgd-open for convenience
+# Alias xgd-open to open for convenience
 alias open='xdg-open'
 
-# Alias pip3 to pip
+# Pip3 to pip
 alias pip='pip3'
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -139,13 +150,17 @@ export PATH="$PATH:~/.local/bin"
 
 # Add /go/bin to path for Golang binaries
 export PATH="$PATH:/go/bin"
-export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/home/leo/go/bin"
+export PATH=$PATH:/usr/local/go/bin
 
 # Add fancy Kubectl PS1 for prompt
 # https://github.com/leosunmo/kube-prompt.zsh
-if [ -f "${ZSH}/custom/plugins/kube-prompt.zsh/kube-ps1.zsh" ]; then
+_KUBE_PROMPT=true
+if [ "${_KUBE_PROMPT}" = true ]; then
   source ${ZSH}/custom/plugins/kube-prompt.zsh/kube-ps1.zsh
   PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(_kube_ps1) $(git_prompt_info)'
+else
+  PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
 fi
 
 # added by travis gem
@@ -189,7 +204,7 @@ fi
 }
 
 # Add colour to manpages
-man() {
+function man() {
 	env \
 		LESS_TERMCAP_md=$'\e[1;36m' \
 		LESS_TERMCAP_me=$'\e[0m' \
@@ -203,7 +218,4 @@ man() {
 # Krew kubectl plugin manager
 PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-# Start SSH agent
-eval $(ssh-agent -s)
-
-source <(kubectl completion zsh)
+fpath=(~/.oh-my-zsh/completions $fpath)
