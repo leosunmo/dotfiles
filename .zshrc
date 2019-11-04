@@ -97,6 +97,10 @@ if [ "$(uname 2> /dev/null)" != "Linux" ]; then
 	# Set key repeat speeds
 	defaults write -g InitialKeyRepeat -int 12 # Normal minimum in the GUI is 15 (225 ms)
 	defaults write -g KeyRepeat -int 3 # Normal minimum in the GUI is 2 (30 ms)
+elif hash gsettings 2>/dev/null; then
+	# Set key repeat in Gnome
+	gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
+	gsettings set org.gnome.desktop.peripherals.keyboard delay 315
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
