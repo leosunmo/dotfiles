@@ -1,51 +1,54 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-zmodload zsh/zprof
+#zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
-# JAVA_HOME stuff
-if [ $(uname 2> /dev/null) != "Linux" ]; then
-export JAVA_HOME=$(/usr/libexec/java_home)
-fi
+# Antigen setup
+source $HOME/antigen/bin/antigen.zsh
 
-# Go Path
-export GOPATH=~/go
-export GO111MODULE=auto
+# Load oh-my-zsh library.
+antigen use oh-my-zsh
+
+# Load bundles from the default repo (oh-my-zsh).
+antigen bundle git
+
+# Load bundles from external repos.
+antigen bundle zsh-users/zsh-completions
+antigen bundle superbrothers/zsh-kubectl-prompt
+antigen bundle asdf
+#antigen bundle kubectl
+#antigen bundle zsh-users/zsh-autosuggestions
+#antigen bundle zsh-users/zsh-syntax-highlighting
+
+
+# Select theme.
+antigen theme robbyrussell
+# Tell Antigen that you're done.
+antigen apply
+
+# antigen init ~/.antigenrc
+
+#fpath=(/home/leo/.asdf/completions $fpath)
+
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
 
 # Enable zmv for fancy ZSH mv action
 autoload -Uz zmv
 
-# Antigen setup
-source ${ZSH}/custom/tools/antigen.zsh
+source <(kubectl completion zsh)
 
-# Load the oh-my-zsh library
-antigen use oh-my-zsh
+# # Install asdf
+# source $HOME/.asdf/asdf.sh
+# source $HOME/.asdf/completions/asdf.bash
 
-# Load some default oh-my-zsh plugins
-antigen bundles <<EOBUNDLES
-git
-pip
-command-not-found
-zsh-dircolors-solarized
-zsh-users/zsh-syntax-highlighting
-zsh-users/zsh-completions
-robbyrussell/oh-my-zsh
-EOBUNDLES
-
-# Load the theme.
-antigen theme robbyrussell
-
-# Apply
-antigen apply
-
-autoload -U compinit && compinit
-
-# Install asdf
-source $HOME/.asdf/asdf.sh
-source $HOME/.asdf/completions/asdf.bash
+# Tool ENVVars
+export FLUX_FORWARD_NAMESPACE=flux
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -93,14 +96,25 @@ source $HOME/.asdf/completions/asdf.bash
 
 # User configuration
 
+
+# JAVA_HOME stuff
+if [ $(uname 2> /dev/null) != "Linux" ]; then
+export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
+# Go Path
+export GOPATH=~/go
+export GO111MODULE=on
+
 if [ "$(uname 2> /dev/null)" != "Linux" ]; then
-	# Set key repeat speeds
+	# Set key repeat speeds on mac
 	defaults write -g InitialKeyRepeat -int 12 # Normal minimum in the GUI is 15 (225 ms)
 	defaults write -g KeyRepeat -int 3 # Normal minimum in the GUI is 2 (30 ms)
-elif hash gsettings 2>/dev/null; then
+elif hash gsettings 2>/dev/null; then 
 	# Set key repeat in Gnome
+	gsettings set org.gnome.desktop.peripherals.keyboard repeat true
 	gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
-	gsettings set org.gnome.desktop.peripherals.keyboard delay 315
+	gsettings set org.gnome.desktop.peripherals.keyboard delay 200
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -132,9 +146,11 @@ fi
 alias ll='ls -la'
 alias dc='docker-compose'
 alias cat='bat'
+alias t='todo.sh'
 
 # Kubernetes aliases
 alias kdump='kubectl get all --all-namespaces'
+alias k='kubectl'
 
 # Alias xgd-open to open for convenience
 alias open='xdg-open'
@@ -157,12 +173,12 @@ export PATH="$PATH:/go/bin"
 export PATH="$PATH:/home/leo/go/bin"
 export PATH=$PATH:/usr/local/go/bin
 
-# Add fancy Kubectl PS1 for prompt
-# https://github.com/leosunmo/kube-prompt.zsh
+# Add .krew (kubectl plugin manager) to PATH
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 _KUBE_PROMPT=true
 if [ "${_KUBE_PROMPT}" = true ]; then
-  source ${ZSH}/custom/plugins/kube-prompt.zsh/kube-ps1.zsh
-  PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(_kube_ps1) $(git_prompt_info)'
+  PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} (%{$fg[red]%}${ZSH_KUBECTL_CONTEXT}%{$reset_color%}:%{$fg[cyan]%}${ZSH_KUBECTL_NAMESPACE}%{$reset_color%}) $(git_prompt_info)'
 else
   PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
 fi
@@ -186,22 +202,30 @@ if [[ $1 == "-h" ]];then
 fi
 	if [[ $# -ge 2 ]]; then
 		case $1 in
-			privileged|priv)
-				aws-vault exec --session-ttl=4h privileged-admin -- ${@:2}
-			;;
-			daily)
-				aws-vault exec --session-ttl=4h daily-admin -- ${@:2}
-			;;
-			break-glass)
-				aws-vault exec --session-ttl=1h break-glass-admin -- ${@:2}
-			;;
-			read-only)
-				aws-vault exec --session-ttl=8h read-only -- ${@:2}
-			;;
-			*)
-				echo "Unknown profile $1. Exiting."
-			;;
+		admin)
+			aws-vault exec --duration=10h admin -- ${@:2}
+		;;
+		daily)
+			aws-vault exec --duration=10h daily-admin -- ${@:2}
+		;;
+		staging)
+			aws-vault exec --duration=8h staging -- ${@:2}
+		;;
+		break-glass)
+			aws-vault exec --duration=1h break-glass-admin -- ${@:2}
+		;;
+		read-only)
+			aws-vault exec --duration=8h read-only -- ${@:2}
+		;;
+		personal)
+			aws-vault exec --duration=8h personal -- ${@:2}
+		;;
+		*)
+			echo "Unknown profile $1. Exiting."
+		;;
 		esac
+	elif [[ $1 == "login" ]]; then
+		aws-vault login --duration=8h daily 
 	else
 		echo "No command detected. Exiting."
 	fi
