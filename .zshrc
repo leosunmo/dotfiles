@@ -7,7 +7,7 @@
 export ZSH=~/.oh-my-zsh
 
 # Antigen setup
-source $HOME/antigen/bin/antigen.zsh
+source $ZSH/custom/tools/antigen.zsh
 
 # Load oh-my-zsh library.
 antigen use oh-my-zsh
