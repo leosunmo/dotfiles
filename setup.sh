@@ -20,6 +20,9 @@ cp -R ./.config/i3-regolith /home/leo/.config/
 cp -R ./i3blocks/i3blocks /usr/share/i3blocks
 cp ./i3blocks/i3blocks.conf /etc/i3blocks.conf
 
+# Copy Alacritty config
+cp -R ./.config/alacritty /home/leo/.config/
+
 # Bind Caps lock to ESC
 setxkbmap -option caps:escape
 
