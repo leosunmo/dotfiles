@@ -16,7 +16,7 @@ add-apt-repository -y ppa:mmstick76/alacritty
 apt install curl jq git vim zsh regolith-desktop alacritty
 
 # Put some regolith and i3 stuff in place
-cp -R ./.config/i3-regolith ~/.config/ 
+cp -R ./.config/i3-regolith /home/leo/.config/ 
 cp -R ./i3blocks/i3blocks /usr/share/i3blocks
 cp ./i3blocks/i3blocks.conf /etc/i3blocks.conf
 
@@ -33,13 +33,13 @@ EOF
 
 
 # Set up oh-my-zsh
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-cp ./.zshrc ~/.zshrc
+git clone https://github.com/robbyrussell/oh-my-zsh.git /home/leo/.oh-my-zsh
+cp ./.zshrc /home/leo/.zshrc
 
 
 # Install Antigen for Zsh plugin management
-mkdir -p ~/.oh-my-zsh/custom/tools
-curl -L git.io/antigen > ~/.oh-my-zsh/custom/tools/antigen.zsh
+mkdir -p /home/leo/.oh-my-zsh/custom/tools
+curl -L git.io/antigen > /home/leo/.oh-my-zsh/custom/tools/antigen.zsh
 
 # Change default shell to ZSH
 chsh -s /bin/zsh
@@ -55,19 +55,19 @@ dpkg -i bat_*_amd64.deb
 popd
 
 # Copy bat config and theme
-cp -R ./.config/bat ~/.config
+cp -R ./.config/bat /home/leo/.config
 
 # Update bat's binary cache with new Nord theme
 bat cache --build
 
 # Install ASDF
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-pushd ~/.asdf
+git clone https://github.com/asdf-vm/asdf.git /home/leo/.asdf
+pushd /home/leo/.asdf
 git checkout "$(git describe --abbrev=0 --tags)"
 popd
 
 # Copy global ASDF tool-versions file
-cp -R ./.tool-versions ~/
+cp -R ./.tool-versions /home/leo/
 
 # Install ASDF tools
 asdf install
