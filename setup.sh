@@ -8,7 +8,7 @@ fi
 
 if ! [ -x "$(command -v git)" ]; then
 	echo "Can't find git, installing it..."
-	sudo apt install git
+	sudo apt install -y git
 fi
 
 if [[ ! -d ~/dotfiles ]]; then
