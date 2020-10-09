@@ -13,8 +13,10 @@ fi
 
 if [[ ! -d ~/dotfiles ]]; then
 	git clone https://github.com/leosunmo/dotfiles.git ~/dotfiles
-	cd ~/dotfiles
 fi
+
+# Make sure we're in the dotfiles directory
+cd ~/dotfiles
 
 # Add ppa for i3-regolith
 sudo add-apt-repository -y ppa:regolith-linux/release
