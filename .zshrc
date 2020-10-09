@@ -19,6 +19,9 @@ for dump in ~/.zcompdump(N.mh+24); do
   compinit
 done
 
+# Make sure oh-my-zsh is happy
+ZSH=$(antibody path ohmyzsh/ohmyzsh)
+
 # Enable zmv for fancy ZSH mv action
 autoload -Uz zmv
 
