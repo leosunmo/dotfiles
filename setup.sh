@@ -7,7 +7,7 @@ if [[ $(id -u) == 0 ]]; then
 fi
 
 # Add ppa for i3-regolith
-sudo add-apt-repository ppa:regolith-linux/release
+sudo add-apt-repository -y ppa:regolith-linux/release
 
 # Add ppa for alacritty
 sudo add-apt-repository -y ppa:mmstick76/alacritty
@@ -19,8 +19,8 @@ cp .zshrc ~/.zshrc
 sudo apt install curl jq git vim zsh regolith-desktop alacritty
 
 # Put some regolith and i3 stuff in place
-cp -R .config/i3-regolith ~/.config/ 
-cp -R i3blocks/i3blocks /usr/share/i3blocks
+cp -R .config/regolith ~/.config/
+sudo cp -R i3blocks/i3blocks /usr/share/i3blocks
 cp i3blocks/i3blocks.conf /etc/i3blocks.conf
 
 # Copy Alacritty config
@@ -55,7 +55,7 @@ curl -s https://api.github.com/repos/sharkdp/bat/releases/latest \
 | jq -r '.assets[] | select(.name | test("bat_.+_amd64.deb")) | .browser_download_url' \
 | wget -qi -
 
-dpkg -i bat_*_amd64.deb
+sudo dpkg -i bat_*_amd64.deb
 
 popd
 
