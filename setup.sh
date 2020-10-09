@@ -25,7 +25,7 @@ sudo add-apt-repository -y ppa:regolith-linux/release
 sudo add-apt-repository -y ppa:mmstick76/alacritty
 
 # Copy .zshrc before we install zsh to avoid intro guide
-cp .zshrc ~/.zshrc
+cp ~/dotfiles/.zshrc ~/.zshrc
 
 # Download some packages we'll need
 sudo apt install curl jq vim zsh regolith-desktop alacritty
@@ -37,12 +37,12 @@ curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
 cp .zsh-plugins.txt ~/.zsh-plugins.txt
 
 # Put some regolith and i3 stuff in place
-cp -R .config/regolith ~/.config/
-sudo cp -R i3blocks/i3blocks /usr/share/i3blocks
-cp i3blocks/i3blocks.conf /etc/i3blocks.conf
+cp -R ~/dotfiles/.config/regolith ~/.config/
+sudo cp -R ~/dotfiles/i3blocks/i3blocks /usr/share/i3blocks
+cp ~/dotfiles/i3blocks/i3blocks.conf /etc/i3blocks.conf
 
 # Copy Alacritty config
-cp -R .config/alacritty ~/.config/
+cp -R ~/dotfiles/.config/alacritty ~/.config/
 
 # Bind Caps lock to ESC
 setxkbmap -option caps:escape
@@ -71,7 +71,7 @@ sudo dpkg -i bat_*_amd64.deb
 popd
 
 # Copy bat config and theme
-cp -R .config/bat ~/.config
+cp -R ~/dotfiles/.config/bat ~/.config
 
 # Update bat's binary cache with new Nord theme
 bat cache --build
