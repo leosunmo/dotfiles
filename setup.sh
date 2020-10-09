@@ -34,11 +34,9 @@ setxkbmap -option caps:escape
 
 EOF
 
-
 # Set up oh-my-zsh
 git clone https://github.com/robbyrussell/oh-my-zsh.git /home/leo/.oh-my-zsh
 cp ./.zshrc /home/leo/.zshrc
-
 
 # Install Antigen for Zsh plugin management
 mkdir -p /home/leo/.oh-my-zsh/custom/tools
@@ -72,8 +70,11 @@ popd
 # Copy global ASDF tool-versions file
 cp -R ./.tool-versions /home/leo/
 
+# Add plugin for each global tool
+awk '{print $1}' .tool-versions | xargs -I{} asdf plugin add {}
+
 # Install ASDF tools
-asdf install
+/home/leo/.asdf/bin/asdf install
 
 # Aliases and misc stuff
 git config --global alias.recent "for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
