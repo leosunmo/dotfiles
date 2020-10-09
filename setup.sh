@@ -18,6 +18,12 @@ cp .zshrc ~/.zshrc
 # Download some packages we'll need
 sudo apt install curl jq git vim zsh regolith-desktop alacritty
 
+# Install Antibody zsh plugin manager
+curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
+
+# Copy Antibody zsh-plugins
+cp .zsh-plugins.txt ~/.zsh-plugins.txt
+
 # Put some regolith and i3 stuff in place
 cp -R .config/regolith ~/.config/
 sudo cp -R i3blocks/i3blocks /usr/share/i3blocks
