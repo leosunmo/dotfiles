@@ -33,8 +33,8 @@ sudo apt install curl jq vim zsh regolith-desktop alacritty
 # Install Antibody zsh plugin manager
 curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
 
-# Copy Antibody zsh-plugins
-cp .zsh-plugins.txt ~/.zsh-plugins.txt
+# Copy Antibody zsh_plugins
+cp .zsh_plugins.txt ~/.zsh_plugins.txt
 
 # Put some regolith and i3 stuff in place
 cp -R ~/dotfiles/.config/regolith ~/.config/
