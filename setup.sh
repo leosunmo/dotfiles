@@ -38,8 +38,8 @@ cp .zsh-plugins.txt ~/.zsh-plugins.txt
 
 # Put some regolith and i3 stuff in place
 cp -R ~/dotfiles/.config/regolith ~/.config/
-sudo cp -R /home/leo/dotfiles/i3blocks/i3blocks /usr/share/i3blocks
-cp ~/dotfiles/i3blocks/i3blocks.conf /etc/i3blocks.conf
+sudo cp -R /home/leo/dotfiles/i3blocks/i3blocks/ /usr/share/i3blocks
+cp ~/dotfiles/i3blocks/i3xrocks.conf /etc/i3blocks.conf
 
 # Copy Alacritty config
 cp -R ~/dotfiles/.config/alacritty ~/.config/
