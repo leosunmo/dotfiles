@@ -89,6 +89,9 @@ awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
 # Install ASDF tools
 ~/.asdf/bin/asdf install
 
+# Create the symlinks to binaries properly
+~/.asdf/bin/asdf reshim
+
 # Aliases and misc stuff
 git config --global alias.recent "for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
 kubectl completion zsh > "${fpath[1]}/_kubectl"
