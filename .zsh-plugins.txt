@@ -1,0 +1,13 @@
+# To be consumed by 'antibody' https://github.com/getantibody/antibody/
+
+# This will install all plugins listed and store them in ~/.cache/antibody.
+# It relies on `fpath` to point to any executables downloaded by antibody
+# to the .cache location.
+
+# Download all of oh-my-zsh
+ohmyzsh/ohmyzsh
+ohmyzsh/ohmyzsh path:themes/robbyrussell.zsh-theme
+asdf-vm/asdf
+kiurchv/asdf.plugin.zsh
+superbrothers/zsh-kubectl-prompt
+zsh-users/zsh-completions

@@ -3,35 +3,16 @@
 
 #zmodload zsh/zprof
 
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+# Antibody setup
+source <(antibody init)
 
-# Antigen setup
-source $ZSH/custom/tools/antigen.zsh
-
-# Load oh-my-zsh library.
-antigen use oh-my-zsh
-
-# Load bundles from the default repo (oh-my-zsh).
-antigen bundle git
-
-# Load bundles from external repos.
-antigen bundle zsh-users/zsh-completions
-antigen bundle superbrothers/zsh-kubectl-prompt
-antigen bundle asdf
-#antigen bundle kubectl
-#antigen bundle zsh-users/zsh-autosuggestions
-#antigen bundle zsh-users/zsh-syntax-highlighting
-
-
-# Select theme.
-antigen theme robbyrussell
-# Tell Antigen that you're done.
-antigen apply
-
-# antigen init ~/.antigenrc
-
-#fpath=(/home/leo/.asdf/completions $fpath)
+# Load zsh plugins with Antibody but only if we can't use
+# the pre-generated zsh_plugins.sh script
+if [[ -f ~/.zsh_plugins.sh ]]; then 
+	source ~/.zsh_plugins.sh
+else
+	antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
+fi
 
 autoload -Uz compinit
 for dump in ~/.zcompdump(N.mh+24); do
@@ -42,13 +23,6 @@ done
 autoload -Uz zmv
 
 source <(kubectl completion zsh)
-
-# # Install asdf
-# source $HOME/.asdf/asdf.sh
-# source $HOME/.asdf/completions/asdf.bash
-
-# Tool ENVVars
-export FLUX_FORWARD_NAMESPACE=flux
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -117,24 +91,6 @@ elif hash gsettings 2>/dev/null; then
 	gsettings set org.gnome.desktop.peripherals.keyboard delay 200
 fi
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -157,6 +113,9 @@ alias open='xdg-open'
 
 # Pip3 to pip
 alias pip='pip3'
+
+# Tool ENVVars
+export FLUX_FORWARD_NAMESPACE=flux
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -245,5 +204,3 @@ function man() {
 
 # Krew kubectl plugin manager
 PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-fpath=(~/.oh-my-zsh/completions $fpath)
