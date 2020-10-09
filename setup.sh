@@ -6,6 +6,15 @@ if [[ $(id -u) == 0 ]]; then
 	exit 1
 fi
 
+if ! [ -x "$(command -v git)" ]; then
+	echo "Can't find git, installing it..."
+	sudo apt install git
+fi
+
+if [[ ! -d ~/dotfiles ]]; then
+	git clone https://github.com/leosunmo/dotfiles.git ~/dotfiles
+fi
+
 # Add ppa for i3-regolith
 sudo add-apt-repository -y ppa:regolith-linux/release
 
@@ -16,7 +25,7 @@ sudo add-apt-repository -y ppa:mmstick76/alacritty
 cp .zshrc ~/.zshrc
 
 # Download some packages we'll need
-sudo apt install curl jq git vim zsh regolith-desktop alacritty
+sudo apt install curl jq vim zsh regolith-desktop alacritty
 
 # Install Antibody zsh plugin manager
 curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
