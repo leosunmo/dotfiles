@@ -13,6 +13,7 @@ fi
 
 if [[ ! -d ~/dotfiles ]]; then
 	git clone https://github.com/leosunmo/dotfiles.git ~/dotfiles
+	cd ~/dotfiles
 fi
 
 # Add ppa for i3-regolith
@@ -53,13 +54,6 @@ sudo sh -c ' cat << EOF > /etc/profile.d/02-caps-to-escape.sh
 setxkbmap -option caps:escape
 
 EOF'
-
-# Set up oh-my-zsh
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-
-# Install Antigen for Zsh plugin management
-mkdir -p ~/.oh-my-zsh/custom/tools
-curl -L git.io/antigen > ~/.oh-my-zsh/custom/tools/antigen.zsh
 
 # Change default shell to ZSH
 chsh -s /bin/zsh
