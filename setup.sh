@@ -74,14 +74,6 @@ cp -R ~/dotfiles/.config/bat ~/.config
 # Update bat's binary cache with new Nord theme
 bat cache --build
 
-# Install ASDF
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-pushd ~/.asdf
-git checkout "$(git describe --abbrev=0 --tags)"
-popd
-
-source ~/.asdf/asdf.sh
-
 # Copy global ASDF tool-versions file
 cp -R .tool-versions ~/
 

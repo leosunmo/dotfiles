@@ -7,7 +7,7 @@
 # Download all of oh-my-zsh
 ohmyzsh/ohmyzsh
 ohmyzsh/ohmyzsh path:themes/robbyrussell.zsh-theme
-#asdf-vm/asdf
+asdf-vm/asdf
 kiurchv/asdf.plugin.zsh
 superbrothers/zsh-kubectl-prompt
 zsh-users/zsh-completions
