@@ -82,6 +82,11 @@ bat cache --build
 # Copy global ASDF tool-versions file
 cp -R .tool-versions ~/
 
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+pushd ~/.asdf
+git checkout "$(git describe --abbrev=0 --tags)"
+popd
+
 # Add plugin for each global tool
 awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
 
@@ -93,5 +98,8 @@ awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
 
 # Aliases and misc stuff
 git config --global alias.recent "for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+git config --global url."git@github.com:".insteadOf https://github.com/
+git config --global url."git://".insteadOf https://
+
 sudo kubectl completion zsh > "${fpath[1]}/_kubectl"
 
