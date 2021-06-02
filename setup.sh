@@ -27,8 +27,13 @@ sudo add-apt-repository -y ppa:mmstick76/alacritty
 # Copy .zshrc before we install zsh to avoid intro guide
 cp ~/dotfiles/.zshrc ~/.zshrc
 
+# Install Regolith desktop if we haven't installed the Regolith ISO
+if ! dpkg -l regolith-system 2&> /dev/null; then
+	sudo apt install -y regolith-desktop
+fi
+
 # Download some packages we'll need
-sudo apt install curl jq vim zsh regolith-desktop alacritty
+sudo apt install -y curl jq vim zsh alacritty
 
 # Install Antibody zsh plugin manager
 curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
