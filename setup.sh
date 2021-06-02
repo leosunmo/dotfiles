@@ -27,13 +27,16 @@ sudo add-apt-repository -y ppa:mmstick76/alacritty
 # Copy .zshrc before we install zsh to avoid intro guide
 cp ~/dotfiles/.zshrc ~/.zshrc
 
+# Download some packages we'll need
+sudo apt install -y curl jq vim zsh alacritty
+
+# Install ohmyzsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 # Install Regolith desktop if we haven't installed the Regolith ISO
 if ! dpkg -l regolith-system 2&> /dev/null; then
 	sudo apt install -y regolith-desktop
 fi
-
-# Download some packages we'll need
-sudo apt install -y curl jq vim zsh alacritty
 
 # Install Antibody zsh plugin manager
 curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
@@ -86,6 +89,8 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 pushd ~/.asdf
 git checkout "$(git describe --abbrev=0 --tags)"
 popd
+
+export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
 
 # Add plugin for each global tool
 awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
