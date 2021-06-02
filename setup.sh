@@ -28,7 +28,7 @@ sudo add-apt-repository -y ppa:mmstick76/alacritty
 cp ~/dotfiles/.zshrc ~/.zshrc
 
 # Download some packages we'll need
-sudo apt install -y curl jq vim zsh alacritty
+sudo apt install -y curl jq vim zsh alacritty fonts-noto-color-emoji
 
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
