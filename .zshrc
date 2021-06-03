@@ -3,9 +3,6 @@
 
 #zmodload zsh/zprof
 
-# Antibody setup
-source <(antibody init)
-
 # Load zsh plugins with Antibody but only if we can't use
 # the pre-generated zsh_plugins.sh script
 if [[ -f ~/.zsh_plugins.sh ]]; then 
@@ -92,6 +89,8 @@ elif hash gsettings 2>/dev/null; then
 	gsettings set org.gnome.desktop.peripherals.keyboard repeat true
 	gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
 	gsettings set org.gnome.desktop.peripherals.keyboard delay 200
+	# Bind caps lock to escape
+	gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -138,8 +137,9 @@ export PATH=$PATH:/usr/local/go/bin
 # Add .krew (kubectl plugin manager) to PATH
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 _KUBE_PROMPT=true
-if [ "${_KUBE_PROMPT}" = true ]; then
+if [ "${_KUBE_PROMPT}" = true ] && [ -f ~/.kube/config ]; then
   PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} (%{$fg[red]%}${ZSH_KUBECTL_CONTEXT}%{$reset_color%}:%{$fg[cyan]%}${ZSH_KUBECTL_NAMESPACE}%{$reset_color%}) $(git_prompt_info)'
 else
   PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
