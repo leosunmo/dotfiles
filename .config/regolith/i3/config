@@ -72,7 +72,7 @@ set_from_resource $ws19 i3-wm.workspace.19.name "19"
 ###############################################################################
 
 ## Launch // Terminal // <> Enter ##
-bindsym $mod+Return exec ~/.cargo/bin/alacritty
+bindsym $mod+Return exec /usr/bin/alacritty
 
 ## Launch // Browser // <><Shift> Enter ##
 bindsym $mod+Shift+Return exec gtk-launch $(xdg-settings get default-web-browser)
@@ -271,14 +271,6 @@ bindsym $mod+Ctrl+r restart
 ## Session // Logout // <><Shift> e ##
 set_from_resource $i3-wm.program.logout i3-wm.program.logout /usr/bin/gnome-session-quit --logout
 bindsym $mod+Shift+e exec $i3-wm.program.logout
-
-## Session // Reboot // <><Shift> b ##
-set_from_resource $i3-wm.program.reboot i3-wm.program.reboot /usr/bin/gnome-session-quit --reboot
-bindsym $mod+Shift+b exec $i3-wm.program.reboot
-
-## Session // Power Down // <><Shift> p ##
-set_from_resource $i3-wm.program.shutdown i3-wm.program.shutdown /usr/bin/gnome-session-quit --power-off
-bindsym $mod+Shift+p exec $i3-wm.program.shutdown
 
 ## Session // Lock Screen // <> Escape ##
 set_from_resource $i3-wm.program.lock i3-wm.program.lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
@@ -486,7 +478,7 @@ bar {
   #font $i3-wm.bar.font
   font pango:JetBrains Mono Medium 13
   separator_symbol $i3-wm.bar.separator
-  status_command $i3-wm.bar.status_command
+  status_command exec $i3-wm.bar.status_command
   tray_output $i3-wm.bar.trayoutput
   strip_workspace_numbers $i3-wm.bar.stripworkspacenumbers
 
@@ -520,8 +512,8 @@ set_from_resource $i3-wm.program.ftui i3-wm.program.ftui /usr/bin/regolith-ftue
 exec --no-startup-id $i3-wm.program.ftui
 
 # Hide the mouse pointer if unused for a duration
-set_from_resource $i3-wm.program.unclutter i3-wm.program.unclutter /usr/bin/regolith-ftue /usr/bin/unclutter -b
-exec --no-startup-id $i3-wm.program.unclutter
+# set_from_resource $i3-wm.program.unclutter i3-wm.program.unclutter /usr/bin/unclutter -b
+exec --no-startup-id /usr/bin/unclutter -b
 
 # User programs from Xresources
 # To use, define an Xresource key i3-wm.program.[1-3] with the value of the program to launch.
@@ -546,3 +538,27 @@ assign [class="Slack"] number $ws5
 # can't assign spotify because of
 # https://github.com/i3/i3/issues/2060#issuecomment-155179472
 for_window [class="Spotify"] move to workspace number $ws6
+
+
+###############################################################################
+# Float certain windows by default
+###############################################################################
+
+# Float Zoom windows and make sure login window is small
+for_window [class="zoom"] floating enable
+for_window [class="zoom" title="^Zoom - (Free|Licensed) Account$"] floating enable, resize set 425 px 745 px
+
+# Don't float actual meeting windows
+for_window [title="^Zoom Meeting$"] floating disable
+
+# Make sure we don't focus Zoom's pop-ups ("You are using Computer Audio", "Someone is sharing their screen" etc.)
+no_focus [class="zoom" title="^zoom$"]
+
+# There's a small period where the new meeting hasn't started, and that window will float by default even
+# though the actual meeting window is configured to not float.
+# The pre-meeting meeting window is a different instance, class=zoom title=Zoom (note, upper-case versus the 
+# lower-cased pop-ups)
+# We want to make sure it's not floating as it will cause window jerkiness.
+for_window [class="zoom" title="^Zoom$"] floating disable
+no_focus [class="zoom" title="^Zoom$"]
+
