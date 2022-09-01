@@ -18,17 +18,22 @@ fi
 # Make sure we're in the dotfiles directory
 cd ~/dotfiles
 
-# Add ppa for i3-regolith
-sudo add-apt-repository -y ppa:regolith-linux/release
+# Add Regolith-desktop key and repo
+wget -qO - https://regolith-desktop.org/regolith.key | \
+gpg --dearmor | sudo tee /usr/share/keyrings/regolith-archive-keyring.gpg > /dev/null
 
-# Add ppa for alacritty
-sudo add-apt-repository -y ppa:mmstick76/alacritty
+echo deb "[arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.gpg] \
+https://regolith-desktop.org/release-ubuntu-jammy-amd64 jammy main" | \
+sudo tee /etc/apt/sources.list.d/regolith.list
+
+# Update repos
+sudo apt update
 
 # Copy .zshrc before we install zsh to avoid intro guide
 cp ~/dotfiles/.zshrc ~/.zshrc
 
 # Download some packages we'll need
-sudo apt install -y curl jq vim zsh alacritty fonts-noto-color-emoji
+sudo apt install -y curl jq vim zsh fonts-noto-color-emoji
 
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -36,6 +41,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 # Install Regolith desktop if we haven't installed the Regolith ISO
 if ! dpkg -l regolith-system 2&> /dev/null; then
 	sudo apt install -y regolith-desktop
+	sudo apt upgrade
 fi
 
 # Install Antibody zsh plugin manager
@@ -66,6 +72,17 @@ EOF'
 # Change default shell to ZSH
 chsh -s /bin/zsh
 
+# Install Rust and cargo with rustup
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install alactritty
+
+# Install Ubuntu dependencies for alacritty
+sudo apt install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+
+# Install alacritty using cargo to get latest stable version
+cargo install alacritty
+
 # Download latest release of bat
 pushd /tmp/
 curl -s https://api.github.com/repos/sharkdp/bat/releases/latest \
@@ -82,9 +99,6 @@ cp -R ~/dotfiles/.config/bat ~/.config
 # Update bat's binary cache with new Nord theme
 bat cache --build
 
-# Copy global ASDF tool-versions file
-cp -R .tool-versions ~/
-
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 pushd ~/.asdf
 git checkout "$(git describe --abbrev=0 --tags)"
@@ -92,19 +106,27 @@ popd
 
 export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
 
-# Add plugin for each global tool
-awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
+# Copy global ASDF tool-versions file
+cp -R .tool-versions ~/
 
-# Install ASDF tools
-~/.asdf/bin/asdf install
+if [[ -f ~/.tool-versions ]]; then
+  # Add plugin for each global tool
+  awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
 
-# Create the symlinks to binaries properly
-~/.asdf/bin/asdf reshim
+  # Install ASDF tools
+  ~/.asdf/bin/asdf install
+
+  # Create the symlinks to binaries properly
+  ~/.asdf/bin/asdf reshim
+fi
 
 # Aliases and misc stuff
 git config --global alias.recent "for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
 git config --global url."git@github.com:".insteadOf https://github.com/
 git config --global url."git://".insteadOf https://
 
-sudo kubectl completion zsh > "${fpath[1]}/_kubectl"
+# If kubectl is installed, add completions
+if command -v kubectl; then
+  sudo kubectl completion zsh > "${fpath[1]}/_kubectl"
+fi
 
