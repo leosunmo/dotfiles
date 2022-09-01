@@ -27,9 +27,19 @@ git clone --depth 1 https://github.com/stephenhutchings/typicons.font
 ln -s $PWD/typicons.font/src/font/typicons.ttf ~/.fonts/
 
 # JetBrainsMono for Alacritty font
+# Download to temporary file, unzip,
+# copy to ~/.fonts and remove it
+dir=$(mktemp -d jetbrainsmono.XXXXXX -p /tmp)
+pushd $dir
 curl -s https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest \
 | jq -r '.assets[] | select(.name | test("JetBrainsMono-.+.zip")) | .browser_download_url' \
 | wget -qi -
+
+unzip JetBrainsMono-*.zip
+cp fonts/ttf/*.ttf ~/.fonts/
+
+popd
+rm -rf $dir
 
 # Refresh font cache
 fc-cache -fv
