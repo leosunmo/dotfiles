@@ -1,0 +1,43 @@
+
+###############################################################################
+# Assign programs to workspaces
+###############################################################################
+
+# Signal to ws 9
+assign [class="Signal"] number $ws9
+# Slack to ws 5
+assign [class="Slack"] number $ws5
+# MS Teams to ws 5
+assign [class="Teams"] number $ws5
+
+# can't assign spotify because of
+# https://github.com/i3/i3/issues/2060#issuecomment-155179472
+for_window [class="Spotify"] move to workspace number $ws6
+
+###############################################################################
+# Float certain windows by default
+###############################################################################
+
+# Float Zoom windows and make sure login window is small
+for_window [class="zoom"] floating enable
+for_window [class="zoom" title="^Zoom - (Free|Licensed) Account$"] floating enable, resize set 425 px 745 px
+
+# Don't float actual meeting windows
+for_window [title="^Zoom Meeting$"] floating disable
+
+# Make sure we don't focus Zoom's pop-ups ("You are using Computer Audio", "Someone is sharing their screen" etc.)
+no_focus [class="zoom" title="^zoom$"]
+
+# There's a small period where the new meeting hasn't started, and that window will float by default even
+# though the actual meeting window is configured to not float.
+# The pre-meeting meeting window is a different instance, class=zoom title=Zoom (note, upper-case versus the 
+# lower-cased pop-ups)
+# We want to make sure it's not floating as it will cause window jerkiness.
+for_window [class="zoom" title="^Zoom$"] floating disable
+no_focus [class="zoom" title="^Zoom$"]
+
+# Float the calculator
+for_window [class="Gnome-calculator" instance="gnome-calculator"] floating enable
+
+# Float the settings
+for_window [class="Regolith-control-center"] floating enable
