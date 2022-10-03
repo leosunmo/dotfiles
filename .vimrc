@@ -1,6 +1,7 @@
 filetype plugin indent on
 set rnu nu
 set autowrite
+set is hls
 au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/yaml.vim
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
