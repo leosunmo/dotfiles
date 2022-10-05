@@ -9,3 +9,8 @@ bindsym $mod+$i3-wm.binding.terminal exec --no-startup-id /usr/local/bin/alacrit
 ## Launch // Browser // <><Shift> Enter ##
 set_from_resource $i3-wm.binding.browser i3-wm.binding.browser Shift+Return
 bindsym $mod+$i3-wm.binding.browser exec --no-startup-id google-chrome-stable --disable-features=Vulkan
+
+## Modify // Sound Settings // <> s ##
+set_from_resource $i3-wm.binding.sound i3-wm.binding.sound s
+set_from_resource $i3-wm.program.sound i3-wm.program.sound regolith-control-center --class=floating_window sound
+bindsym $mod+$i3-wm.binding.sound exec --no-startup-id $i3-wm.program.sound
