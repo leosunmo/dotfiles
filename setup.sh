@@ -69,6 +69,11 @@ setxkbmap -option caps:escape
 
 EOF'
 
+# Install extra drivers if we use a Tiger Lake intel audio driver
+if lspci -nnk | grep -A2 Audio | grep 'Kernel driver in use:' | grep -q sof; then
+sudo apt install -y firmware-sof-signed
+fi
+
 # Change default shell to ZSH
 chsh -s /bin/zsh
 
