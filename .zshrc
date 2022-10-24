@@ -137,13 +137,41 @@ export PATH=$PATH:/usr/local/go/bin
 # Add .krew (kubectl plugin manager) to PATH
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-_KUBE_PROMPT=true
+function _kube_prompt() {
 if [ "${_KUBE_PROMPT}" = true ] && [ -f ~/.kube/config ]; then
-  PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} (%{$fg[red]%}${ZSH_KUBECTL_CONTEXT}%{$reset_color%}:%{$fg[cyan]%}${ZSH_KUBECTL_NAMESPACE}%{$reset_color%}) $(git_prompt_info)'
-else
-  PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+	local _CLUSTER_COLOUR
+	# Decide colour based on cluster name
+	if [[ $ZSH_KUBECTL_CONTEXT =~ "-sandbox" ]]; then
+		_CLUSTER_COLOUR="green"
+	elif [[ $ZSH_KUBECTL_CONTEXT =~ "-staging" || $ZSH_KUBECTL_CONTEXT =~ "-engineering" ]]; then
+		_CLUSTER_COLOUR="yellow"
+	elif [[ $ZSH_KUBECTL_CONTEXT =~ "-prod" ]]; then
+		_CLUSTER_COLOUR="red"
+	else
+		_CLUSTER_COLOUR="red"
+	fi
+
+	local cluster_short=${ZSH_KUBECTL_CONTEXT##*_}
+
+	echo "%{$reset_color%}(%{$fg[${_CLUSTER_COLOUR}]%}${cluster_short}%{$reset_color%}:%{$fg[cyan]%}${ZSH_KUBECTL_NAMESPACE}%{$reset_color%}) "
 fi
+}
+
+_KUBE_PROMPT=true
+# kprompt enables and disables the kube prompt
+function kprompt () {
+	if [ ! -f ~/.kube/config ]; then
+		echo "No kube config found"
+	fi 
+	if [ "${_KUBE_PROMPT}" = true ]; then
+		_KUBE_PROMPT=false
+	else
+		_KUBE_PROMPT=true
+	fi
+}
+
+ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+PROMPT='${ret_status}$(_kube_prompt)%{$fg_bold[cyan]%}%c%{$reset_color%} $(git_prompt_info)%{$reset_color%}'
 
 # added by travis gem
 [ -f /.travis/travis.sh ] && source /.travis/travis.sh
