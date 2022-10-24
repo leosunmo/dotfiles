@@ -75,7 +75,7 @@ sudo apt install -y firmware-sof-signed
 fi
 
 # Change default shell to ZSH
-chsh -s /bin/zsh
+chsh -s /usr/bin/zsh
 
 # Install Rust and cargo with rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
