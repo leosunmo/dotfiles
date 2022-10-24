@@ -5,7 +5,8 @@ set -e
 # These are the fonts from barista.run, copied from
 # https://barista.run/pango/icons with the path modified.
 
-mkdir ~/.config/regolith2/fonts
+mkdir -p  ~/.config/regolith2/fonts
+mkdir -p ~/.fonts
 cd ~/.config/regolith2/fonts
 
 # Material Design Icons
