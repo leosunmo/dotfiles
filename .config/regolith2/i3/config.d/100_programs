@@ -41,3 +41,6 @@ for_window [class="Gnome-calculator" instance="gnome-calculator"] floating enabl
 
 # Float the settings
 for_window [class="Regolith-control-center"] floating enable
+
+# Float Pritunl VPN Client
+for_window [class="pritunl"] floating enable
