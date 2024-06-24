@@ -1,5 +1,5 @@
 # Looks
-regolith.look.path: /usr/share/regolith-look/nord
+!regolith.look.path: /usr/share/regolith-look/nord
 i3-wm.gaps.inner.size: 2
 
 # Bar
@@ -10,3 +10,4 @@ i3-wm.bar.trayoutput: none
 gnome.terminal.font: JetBrains Mono 14
 gtk.monospace_font_name: JetBrains Mono 14
 #gtk.font_name: JetBrains Mono 14
+regolith.look.path: /usr/share/regolith-look/nord
