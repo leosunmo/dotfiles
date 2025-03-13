@@ -35,7 +35,11 @@ ZSH=$(antibody path ohmyzsh/ohmyzsh)
 # Enable zmv for fancy ZSH mv action
 autoload -Uz zmv
 
+# Kubectl completion
 source <(kubectl completion zsh)
+
+# jt completion
+source <(jt -c)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
