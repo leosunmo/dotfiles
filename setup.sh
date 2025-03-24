@@ -6,6 +6,10 @@ if [[ $(id -u) == 0 ]]; then
 	exit 1
 fi
 
+TERM_CHOICE="ghostty"
+GO_VERSION="1.24.1"
+ASDF_VERSION="0.16.0"
+
 if ! [ -x "$(command -v git)" ]; then
 	echo "Can't find git, installing it..."
 	sudo apt install -y git
@@ -19,11 +23,11 @@ fi
 cd ~/dotfiles
 
 # Add Regolith-desktop key and repo
-wget -qO - https://regolith-desktop.org/regolith.key | \
+wget -qO - https://archive.regolith-desktop.com/regolith.key | \
 gpg --dearmor | sudo tee /usr/share/keyrings/regolith-archive-keyring.gpg > /dev/null
 
 echo deb "[arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.gpg] \
-https://regolith-desktop.org/release-ubuntu-jammy-amd64 jammy main" | \
+https://archive.regolith-desktop.com/ubuntu/stable noble v3.2" | \
 sudo tee /etc/apt/sources.list.d/regolith.list
 
 # Update repos
@@ -40,7 +44,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 # Install Regolith desktop if we haven't installed the Regolith ISO
 if ! dpkg -l regolith-system 2&> /dev/null; then
-	sudo apt install -y regolith-desktop
+	sudo apt install -y regolith-desktop regolith-session-flashback regolith-session-sway regolith-look-nord
 	sudo apt upgrade
 fi
 
@@ -74,19 +78,37 @@ if lspci -nnk | grep -A2 Audio | grep 'Kernel driver in use:' | grep -q sof; the
 sudo apt install -y firmware-sof-signed
 fi
 
-# Change default shell to ZSH
-chsh -s /usr/bin/zsh
+
+# Install Go
+pushd /tmp/
+wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+rm go${GO_VERSION}.linux-amd64.tar.gz
+popd
 
 # Install Rust and cargo with rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# Install alactritty
+case "$TERM_CHOICE" in
+  "alacritty")
+    # Install Ubuntu dependencies for alacritty
+    sudo apt install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 
-# Install Ubuntu dependencies for alacritty
-sudo apt install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+    # Install alacritty using cargo to get latest stable version
+    cargo install alacritty
+    ;;
+  "ghostty")
+    # Install ghostty
+    # A bit sketch with a install.sh, but I'd be blindly downloading latest release anyway...
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 
-# Install alacritty using cargo to get latest stable version
-cargo install alacritty
+    # Put ghostty config in place
+    cp -R ~/dotfiles/.config/ghostty ~/.config
+    ;;
+  *)
+    echo "Invalid terminal choice"
+    ;;
+esac
 
 # Download latest release of bat
 pushd /tmp/
@@ -104,12 +126,8 @@ cp -R ~/dotfiles/.config/bat ~/.config
 # Update bat's binary cache with new Nord theme
 bat cache --build
 
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-pushd ~/.asdf
-git checkout "$(git describe --abbrev=0 --tags)"
-popd
-
-export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
+# Install asdf
+go install github.com/asdf-vm/asdf/cmd/asdf@v${ASDF_VERSION}
 
 # Copy global ASDF tool-versions file
 cp -R .tool-versions ~/
@@ -119,19 +137,23 @@ if [[ -f ~/.tool-versions ]]; then
   awk '{print $1}' .tool-versions | xargs -I{} ~/.asdf/bin/asdf plugin add {}
 
   # Install ASDF tools
-  ~/.asdf/bin/asdf install
+  asdf install
 
   # Create the symlinks to binaries properly
-  ~/.asdf/bin/asdf reshim
+  asdf reshim
 fi
 
 # Aliases and misc stuff
 git config --global alias.recent "for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
 git config --global url."git@github.com:".insteadOf https://github.com/
 git config --global url."git://".insteadOf https://
+git config --global core.editor "vim"
+
 
 # If kubectl is installed, add completions
 if command -v kubectl; then
   sudo kubectl completion zsh > "${fpath[1]}/_kubectl"
 fi
 
+# Change default shell to ZSH
+chsh -s /usr/bin/zsh

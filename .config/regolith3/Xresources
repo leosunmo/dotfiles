@@ -1,0 +1,13 @@
+# Looks
+!regolith.look.path: /usr/share/regolith-look/nord
+wm.gaps.inner.size: 2
+
+# Bar
+wm.bar.status_command: exec /home/leo/workspace/gobar/gobar </dev/stdin 2>/home/leo/.config/gobar/log.txt
+i3-wm.bar.trayoutput: none
+
+# Fonts
+gnome.terminal.font: JetBrains Mono 14
+gtk.monospace_font_name: JetBrains Mono 14
+#gtk.font_name: JetBrains Mono 14
+regolith.look.path: /usr/share/regolith-look/nord

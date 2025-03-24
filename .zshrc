@@ -28,18 +28,15 @@ for dump in ~/.~/.zcompdump-antibody(N.mh+24); do
 done
 compinit -d ~/.zcompdump-antibody
 
-
 # Make sure oh-my-zsh is happy
 ZSH=$(antibody path ohmyzsh/ohmyzsh)
 
 # Enable zmv for fancy ZSH mv action
 autoload -Uz zmv
 
-# Kubectl completion
-source <(kubectl completion zsh)
+# set up asdf 
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
-# jt completion
-source <(jt -c)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -87,7 +84,6 @@ source <(jt -c)
 
 # User configuration
 
-
 # JAVA_HOME stuff
 if [ $(uname 2> /dev/null) != "Linux" ]; then
 export JAVA_HOME=$(/usr/libexec/java_home)
@@ -96,8 +92,6 @@ fi
 # Go settings
 export GOPATH=~/go
 export GO111MODULE=on
-export GONOSUMDB=gitlab.com/boozt
-export GOPRIVATE="gitlab.com/boozt/*"
 
 if [ "$(uname 2> /dev/null)" != "Linux" ]; then
 	# Set key repeat speeds on mac
@@ -193,7 +187,8 @@ _PREVIOUS_KUBE_CONTEXT=""
 function kprompt () {
 	if [ ! -f ~/.kube/config ]; then
 		echo "No kube config found"
-	fi 
+		return
+	fi
 	if [ "${_KUBE_PROMPT}" = true ]; then
 		_KUBE_PROMPT=false
 		_PREVIOUS_KUBE_CONTEXT=$(kubectl config current-context)
@@ -208,7 +203,7 @@ function kprompt () {
 _GIT_PROMPT=true
 function _git_prompt() {
 	if [ "${_GIT_PROMPT}" = true ]; then
-		echo "$(git_prompt_info)"
+		echo "$(_omz_git_prompt_info)"
 	else
 		echo ""
 	fi
@@ -303,3 +298,9 @@ if [ -f '/home/leo/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/home/leo/tmp/g
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/leo/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/leo/tmp/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Kubectl completion
+source <(kubectl completion zsh)
+
+# jt completion
+# source <(jt -c)

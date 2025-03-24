@@ -1,0 +1,8 @@
+###############################################################################
+# Launcher dialogs
+###############################################################################
+
+## Modify // Sound Settings // <> s ##
+set_from_resource $wm.binding.sound wm.binding.sound s
+set_from_resource $wm.program.sound wm.program.sound regolith-control-center sound
+bindsym $mod+$wm.binding.sound exec --no-startup-id $wm.program.sound
