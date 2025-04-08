@@ -1,0 +1,3 @@
+! option = symbols
+  swedish_letters_on_us:sweletters    = +swedish_letters_on_us(sweletters)
+! include %S/evdevu

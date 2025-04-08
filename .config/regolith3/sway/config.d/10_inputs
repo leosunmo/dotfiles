@@ -1,8 +1,6 @@
 input type:keyboard {
-  xkb_options caps:escape
-}
-
-input type:keyboard {
+    xkb_layout "us"
+    xkb_options "caps:escape,swedish_letters_on_us:sweletters"
     repeat_delay 200
     repeat_rate 60
 }

@@ -4,15 +4,15 @@
 ###############################################################################
 
 # Signal to ws 9
-assign [class="Signal"] number $ws9
+assign [app_id="signal"] number $ws9
 # Slack to ws 5
-assign [class="Slack"] number $ws5
+assign [app_id="Slack"] number $ws5
 # MS Teams to ws 5
-assign [class="Teams"] number $ws5
+assign [app_id="Teams"] number $ws5
 
 # can't assign spotify because of
 # https://github.com/i3/i3/issues/2060#issuecomment-155179472
-for_window [class="Spotify"] move to workspace number $ws6
+for_window [app_id="spotify"] move to workspace number $ws6
 
 ###############################################################################
 # Float certain windows by default
@@ -37,10 +37,10 @@ for_window [class="zoom" title="^Zoom$"] floating disable
 no_focus [class="zoom" title="^Zoom$"]
 
 # Float the calculator
-for_window [class="Gnome-calculator" instance="gnome-calculator"] floating enable
+for_window [app_id="org.gnome.Calculator"] floating enable
 
 # Float the settings
-for_window [class="Regolith-control-center"] floating enable
+for_window [app_id="org.regolith.Settings"] floating enable
 
 # Float Pritunl VPN Client
 for_window [class="pritunl"] floating enable
