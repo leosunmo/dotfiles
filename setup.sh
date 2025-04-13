@@ -42,17 +42,14 @@ sudo apt install -y curl jq vim zsh fonts-noto-color-emoji
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+# Install kubectl prompt zsh plugin
+git clone https://github.com/superbrothers/zsh-kubectl-prompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-kubectl-prompt
+
 # Install Regolith desktop if we haven't installed the Regolith ISO
 if ! dpkg -l regolith-system 2&> /dev/null; then
 	sudo apt install -y regolith-desktop regolith-session-flashback regolith-session-sway regolith-look-nord
 	sudo apt upgrade
 fi
-
-# Install Antibody zsh plugin manager
-curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
-
-# Copy Antibody zsh_plugins
-cp .zsh_plugins.txt ~/.zsh_plugins.txt
 
 # Put some regolith and i3 stuff in place
 cp -R ~/dotfiles/.config/regolith ~/.config/

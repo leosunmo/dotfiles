@@ -9,8 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 plugins=(
   git
   docker
-  kubectl
-  kubectx
+  zsh-kubectl-prompt
 )
 
 source $ZSH/oh-my-zsh.sh
