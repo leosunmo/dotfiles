@@ -282,5 +282,8 @@ if [ -f '/home/leo/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/leo
 if [ -f ~/.kube/config ]; then
 	source <(kubectl completion zsh)
 fi
+
+alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland'
+
 # jt completion
 # source <(jt -c)
