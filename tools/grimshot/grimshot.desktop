@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Grimshot
+Comment=Screenshot to clipboard
+Keywords=screenshot;flameshot;grim;grimshot
+Exec=/usr/bin/grimshot 
+Type=Application

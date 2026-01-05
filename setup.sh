@@ -146,6 +146,9 @@ git config --global url."git@github.com:".insteadOf https://github.com/
 git config --global url."git://".insteadOf https://
 git config --global core.editor "vim"
 
+# Copy Grimshot to /usr/bin
+cp tools/grimshot/grimshot /usr/bin/grimshot
+cp tools/grimshot/grimshot.desktop /usr/share/applications/grimshot.desktop
 
 # If kubectl is installed, add completions
 if command -v kubectl; then
